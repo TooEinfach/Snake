@@ -147,6 +147,7 @@ def main():
     while flag:
         pygame.time.delay(50) # This will delay the game so it doesn't run too quickly
         clock.tick(10) # Will ensure our game runs at 10 fps
+        s.move()
         redrawWindow(win) # This will refresh our screen
 
 main()
