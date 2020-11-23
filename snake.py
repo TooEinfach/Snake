@@ -183,6 +183,12 @@ def main():
         if s.body[0] == snake.pos: #Checks if the head collides with the snack
             s.addCube() # Adds a new cube to the snake
             snack = cube(randomSnack(rows, s), color=(0,255,0)) # Creates a new snack object
+        for x in range(len(s.body)):
+            if s.body[x].pos in list(map(lambda z: z.pos,s.body[x+1:])): # This will check if an y of the positions in our body list overlap
+                print('Score: ', len(s.body))
+                message_box('You Lost!', 'Play again...')
+                s.reset((10,10))
+                break
         redrawWindow(win) # This will refresh our screen
 
 main()
