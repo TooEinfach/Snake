@@ -162,10 +162,17 @@ def randomSnack(rows, item):
     return (x,y)
 
 def message_box(subject, content):
-    pass
+    root = tk.Tk()
+    root.attributes("-topmost", True)
+    root.withdraw()
+    messagebox.showinfo(subject, content)
+    try:
+        root.destroy()
+    except:
+        pass
 
 def main():
-    global width, rows, s
+    global width, rows, s, snack
     width = 500 # Width of my screen
     height = 500 # Height of my screen
     rows = 20 # Amount of rows
@@ -185,7 +192,7 @@ def main():
         pygame.time.delay(50) # This will delay the game so it doesn't run too quickly
         clock.tick(10) # Will ensure our game runs at 10 fps
         s.move()
-        if s.body[0] == snake.pos: #Checks if the head collides with the snack
+        if s.body[0] == snack.pos: #Checks if the head collides with the snack
             s.addCube() # Adds a new cube to the snake
             snack = cube(randomSnack(rows, s), color=(0,255,0)) # Creates a new snack object
         for x in range(len(s.body)):
