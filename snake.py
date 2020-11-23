@@ -15,11 +15,24 @@ class cube(object):
 
     def move(self, dirnx, dirny):
         self.dirnx = dirnx
-        self.dirny dirny
+        self.dirny = dirny
         self.pos = (self.pos[0] + self.dirnx, self.pos[1] + self.dirny) # Change our position
 
     def draw(self, surface, eyes=False):
-        pass
+        dis = self.w // self.rows # Width/Height of each cube
+        i = self.pos[0] # Current row
+        j = self.pos[1] # Curret column
+
+        pygame.draw.rect(surface, self.color, (i*dis+1,j*dis+1, dis-2, dis-2))
+        # By multiplying the row and column value of our cube by the width and height of each cube we can determine where to draw it
+
+        if eyes: # Draw the eyes
+            centre = dis//2
+            radius = 3
+            circleMiddle = (i*dis+centre-radius,j*dis+8)
+            circleMiddle2 = (i*dis + dis -radius*2, j*dis+8)
+            pygame.draw.circle(surface, (0,0,0), circleMiddle, radius)
+            pygame.draw.circle(surface, (0,0,0), circleMiddle2, radius)
 
 
 class snake(object):
@@ -35,7 +48,7 @@ class snake(object):
         self.dirny = 1
 
     def move(self):
-        for even in pygame.event.get():
+        for event in pygame.event.get():
             if event.type == pygame.QUIT: # Check if user hit the red x
                 pygame.quit()
 
@@ -104,13 +117,25 @@ def drawGrid(w, rows, surface):
         pygame.draw.line(surface, (255,255,255), (0,y),(w,y))
 
 def redrawWindow(surface):
-    global rows, width
+    global rows, width, s
     surface.fill((0,0,0)) # Fills the screen with black
+    s.draw(surface)
     drawGrid(width, rows, surface) # Will draw our grid lines
     pygame.display.update() # Updates the screen
 
 def randomSnack(rows, item):
-    pass
+    positions = item.body # Get all the positions of cubes in our snake
+
+    while True: # Keep generating random positions until we get a valid one
+        x = random.randrange(rows)
+        y = random.randrange(rows)
+        if len(list(filter(lambda z: z.pos == (x,y), positions))) > 0:
+            # This will check if the position we generated is occupied by the snake
+            continue
+        else:
+            break
+
+    return (x,y)
 
 def message_box(subject, content):
     pass
@@ -130,9 +155,12 @@ def main():
     flag = True
     # STARTING MAIN LOOP
 
+    snack = cube(randomSnack(rows, s), color=(0,255,0))
+    
     while flag:
         pygame.time.delay(50) # This will delay the game so it doesn't run too quickly
         clock.tick(10) # Will ensure our game runs at 10 fps
+        s.move()
         redrawWindow(win) # This will refresh our screen
 
 main()
