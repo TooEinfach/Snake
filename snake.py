@@ -117,9 +117,10 @@ def drawGrid(w, rows, surface):
         pygame.draw.line(surface, (255,255,255), (0,y),(w,y))
 
 def redrawWindow(surface):
-    global rows, width, s
+    global rows, width, s, snack
     surface.fill((0,0,0)) # Fills the screen with black
     s.draw(surface)
+    snack.draw(surface)
     drawGrid(width, rows, surface) # Will draw our grid lines
     pygame.display.update() # Updates the screen
 
@@ -161,6 +162,9 @@ def main():
         pygame.time.delay(50) # This will delay the game so it doesn't run too quickly
         clock.tick(10) # Will ensure our game runs at 10 fps
         s.move()
+        if s.body[0] == snake.pos: #Checks if the head collides with the snack
+            s.addCube() # Adds a new cube to the snake
+            snack = cube(randomSnack(rows, s), color=(0,255,0)) # Creates a new snack object
         redrawWindow(win) # This will refresh our screen
 
 main()
