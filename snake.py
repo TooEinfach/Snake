@@ -15,11 +15,24 @@ class cube(object):
 
     def move(self, dirnx, dirny):
         self.dirnx = dirnx
-        self.dirny dirny
+        self.dirny = dirny
         self.pos = (self.pos[0] + self.dirnx, self.pos[1] + self.dirny) # Change our position
 
     def draw(self, surface, eyes=False):
-        pass
+        dis = self.w // self.rows # Width/Height of each cube
+        i = self.pos[0] # Current row
+        j = self.pos[1] # Curret column
+
+        pygame.draw.rect(surface, self.color, (i*dis+1,j*dis+1, dis-2, dis-2))
+        # By multiplying the row and column value of our cube by the width and height of each cube we can determine where to draw it
+
+        if eyes: # Draw the eyes
+            centre = dis//2
+            radius = 3
+            circleMiddle = (i*dis+centre-radius,j*dis+8)
+            circleMiddle2 = (i*dis + dis -radius*2, j*dis+8)
+            pygame.draw.circle(surface, (0,0,0), circleMiddle, radius)
+            pygame.draw.circle(surface, (0,0,0), circleMiddle2, radius)
 
 
 class snake(object):
@@ -104,8 +117,9 @@ def drawGrid(w, rows, surface):
         pygame.draw.line(surface, (255,255,255), (0,y),(w,y))
 
 def redrawWindow(surface):
-    global rows, width
+    global rows, width, s
     surface.fill((0,0,0)) # Fills the screen with black
+    s.draw(surface)
     drawGrid(width, rows, surface) # Will draw our grid lines
     pygame.display.update() # Updates the screen
 
