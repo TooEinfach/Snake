@@ -124,7 +124,18 @@ def redrawWindow(surface):
     pygame.display.update() # Updates the screen
 
 def randomSnack(rows, item):
-    pass
+    position = item.body # Get all the positions of cubes in our snake
+
+    while True: # Keep generating random positions until we get a valid one
+        x = random.randonrange(rows)
+        y = random.randonrange(rows)
+        if len(list(filter(lambda z: z.pos == (x,y), positions))) > 0:
+            # This will check if the position we generated is occupied by the snake
+            continue
+        else:
+            break
+
+    return (x,y)
 
 def message_box(subject, content):
     pass
@@ -144,6 +155,8 @@ def main():
     flag = True
     # STARTING MAIN LOOP
 
+    snack = cube(randomSnack(rows, s), color=(0,255,0))
+    
     while flag:
         pygame.time.delay(50) # This will delay the game so it doesn't run too quickly
         clock.tick(10) # Will ensure our game runs at 10 fps
