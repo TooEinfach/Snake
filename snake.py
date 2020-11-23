@@ -91,7 +91,12 @@ class snake(object):
                         else: c.move(c.dirnx,c.dirny) # If it hasn't reached the edge just move in our current direction
 
     def reset(self, pos):
-        pass
+        self.head = cube(pos)
+        self.body = []
+        self.body.append(self.head)
+        self.turns = {}
+        self.dirnx = 0
+        self.dirny = 1
 
     def addCube(self):
         tail = self.body[-1]
