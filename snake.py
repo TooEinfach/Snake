@@ -173,34 +173,31 @@ def message_box(subject, content):
 
 def main():
     global width, rows, s, snack
-    width = 500 # Width of my screen
-    height = 500 # Height of my screen
-    rows = 20 # Amount of rows
-
-    win = pygame.display.set_mode((width, height))  # Creates my screen object
-
-    s = snake((255,0,0), (10,10)) # Creates a sanke object which well code later
-
-    clock = pygame.time.Clock() # creating a clock object
-
-    flag = True
-    # STARTING MAIN LOOP
-
+    width = 500
+    rows = 20
+    win = pygame.display.set_mode((width, width))
+    s = snake((255,0,0), (10,10))
     snack = cube(randomSnack(rows, s), color=(0,255,0))
+    flag = True
+
+    clock = pygame.time.Clock()
     
     while flag:
-        pygame.time.delay(50) # This will delay the game so it doesn't run too quickly
-        clock.tick(10) # Will ensure our game runs at 10 fps
+        pygame.time.delay(50)
+        clock.tick(10)
         s.move()
-        if s.body[0] == snack.pos: #Checks if the head collides with the snack
-            s.addCube() # Adds a new cube to the snake
-            snack = cube(randomSnack(rows, s), color=(0,255,0)) # Creates a new snack object
+        if s.body[0].pos == snack.pos:
+            s.addCube()
+            snack = cube(randomSnack(rows, s), color=(0,255,0))
+
         for x in range(len(s.body)):
-            if s.body[x].pos in list(map(lambda z: z.pos,s.body[x+1:])): # This will check if an y of the positions in our body list overlap
+            if s.body[x].pos in list(map(lambda z:z.pos,s.body[x+1:])):
                 print('Score: ', len(s.body))
                 message_box('You Lost!', 'Play again...')
                 s.reset((10,10))
                 break
-        redrawWindow(win) # This will refresh our screen
+
+            
+        redrawWindow(win)
 
 main()
