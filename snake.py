@@ -38,7 +38,7 @@ def drawGrid(w, rows, surface):
     sizeBtwn = w // rows # Gives the distance between the lines
 
     x = 0 # Keps track of the current x
-    y = # Keeps track of the current y
+    y = 0 # Keeps track of the current y
     for l in range(rows): # Draw on vertical and one horizontal lin each loop
         x = x + sizeBtwn
         y = y + sizeBtwn
@@ -47,8 +47,9 @@ def drawGrid(w, rows, surface):
         pygame.draw.line(surface, (255,255,255), (0,y),(w,y))
 
 def redrawWindow(surface):
+    global rows, width
     surface.fill((0,0,0)) # Fills the screen with black
-    drawGrid(surface) # Will draw our grid lines
+    drawGrid(width, rows, surface) # Will draw our grid lines
     pygame.display.update() # Updates the screen
 
 def randomSnack(rows, item):
