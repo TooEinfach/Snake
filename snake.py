@@ -48,7 +48,7 @@ class snake(object):
         self.dirny = 1
 
     def move(self):
-        for even in pygame.event.get():
+        for event in pygame.event.get():
             if event.type == pygame.QUIT: # Check if user hit the red x
                 pygame.quit()
 
@@ -124,11 +124,11 @@ def redrawWindow(surface):
     pygame.display.update() # Updates the screen
 
 def randomSnack(rows, item):
-    position = item.body # Get all the positions of cubes in our snake
+    positions = item.body # Get all the positions of cubes in our snake
 
     while True: # Keep generating random positions until we get a valid one
-        x = random.randonrange(rows)
-        y = random.randonrange(rows)
+        x = random.randrange(rows)
+        y = random.randrange(rows)
         if len(list(filter(lambda z: z.pos == (x,y), positions))) > 0:
             # This will check if the position we generated is occupied by the snake
             continue
