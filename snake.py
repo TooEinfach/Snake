@@ -18,8 +18,16 @@ class cube(object):
 
 
 class snake(object):
+    body = []
+    turns = {}
     def __init__(self, color, pos):
-        pass
+        self.color = color
+        self.head = cube(pos) # The head will be the front of the snake
+        self.body.append(self.head) # We wil add head (which is a cube object) to the body
+
+        # These will represent the direction the sanke is moving
+        self.dirnx = 0
+        self.dirny = 1
 
     def move(self):
         pass
