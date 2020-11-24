@@ -183,7 +183,21 @@ def main():
     
     while flag:
         pygame.time.delay(50)
-        clock.tick(10)
+        
+        # Increasing difficutly by increasing spead
+        if len(s.body) >= 1 and len(s.body) < 5:
+            clock.tick(10) # Game running at 10 FPS
+        elif len(s.body) >= 5 and len(s.body) < 10:
+            clock.tick(15)
+        elif len(s.body) >= 10 and len(s.body) < 15:
+            clock.tick(20)
+        elif len(s.body) >= 15 and len(s.body) < 20:
+            clock.tick(25)
+        elif len(s.body) >= 20 and len(s.body) < 25:
+            clock.tick(40)
+        elif len(s.body) >=25:
+            clock.tick(80)
+
         s.move()
         if s.body[0].pos == snack.pos:
             s.addCube()
@@ -193,6 +207,7 @@ def main():
             if s.body[x].pos in list(map(lambda z:z.pos,s.body[x+1:])):
                 print('Score: ', len(s.body))
                 message_box('You Lost!', 'Play again...')
+                message_box('Score: ', len(s.body))
                 s.reset((10,10))
                 break
 
